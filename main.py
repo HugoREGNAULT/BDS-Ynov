@@ -144,28 +144,32 @@ async def ping(interaction: discord.Interaction):
     uptime = str(timedelta(seconds=difference))
     total_members = 0
     for guild in bot.guilds:
-        total_members = total_members + guild.member_count
+        total_members += guild.member_count
 
     headers = {'Authorization': 'Bearer ptla_VVQi0WpHAaahey0YEuMQPXRN3vWeQBP6zkl8fuT2dkk'}
     response = requests.get("https://panel.paladium-bot.fr//api/client/servers/fc0a8a1f/resources", headers = headers)
+
     if response.status_code == 200:
         data = response.json()['attributes']["resources"]
         ram_used = round(int(data["memory_bytes"]) / (1024 * 1024), 2)
 
-        embed = discord.Embed(title = f'Temps de latence du Bot',
-                              description = f'''`＃ PING` : **{round(bot.latency * 1000)}ms**.
+        embed = discord.Embed(
+            title = f'Temps de latence du Bot',
+            description = f'''`＃ PING` : **{round(bot.latency * 1000)}ms**.
 `＃ Temps de Connexion` : **{str(timedelta(seconds=difference))}**.
 `＃ RAM utilisée` : **{ram_used} Mo / {(psutil.virtual_memory().total // (1024 ** 2))} Mo**.
-`＃ Latence API` : **{response.elapsed.total_seconds() * 1000:.2f} ms**.
-        ''', 
-                              color = 0X22B1A4)
+`＃ Latence API` : **{response.elapsed.total_seconds() * 1000:.2f} ms**.''', 
+            color = 0x22B1A4
+        )
     else:
         print("[ /HELP ] 〉Erreur lors de la récupération des statistiques du serveur")
-        await interaction.response.send_message(f'Erreur lors de la récupération des statistiques du serveur', ephemeral = True)
+        await interaction.response.send_message('Erreur lors de la récupération des statistiques du serveur', ephemeral = True)
+        return
 
     embed.set_thumbnail(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792166604885/logo_ynov_campus_rvb.gif?ex=66d9a0dd&is=66d84f5d&hm=3869fa5c41a09f823afb0d31af877108083b60622e275f66850b6d386b643043&')
     embed.set_image(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792506474556/logo_ynov_campus_rvb_blanc.jpg?ex=66d9a0dd&is=66d84f5d&hm=890a0b66fa1362304f067f04673c5f00c357bbda8bf94ff11e9888efeb0ce212&')
     await interaction.response.send_message(embed = embed)
+
 
 # ------------------------------------------
 # /LIENS
@@ -174,10 +178,9 @@ async def ping(interaction: discord.Interaction):
 @tree.command(name = 'liens', description = 'Affiche les liens importants.')
 async def liens(interaction: discord.Interaction):
     embed = discord.Embed(title = 'Liens importants', 
-                          description = f'''## Liens Importants
-Liens qui vous aideront à naviguer et à en savoir plus sur le BDS d'Ynov Paris
+                          description = f'''## Liens qui vous aideront à naviguer et à en savoir plus sur le BDS d'Ynov Paris
 
-> [` Site Officiel `](https://bds.ynov.com/) » <:PersonAdd:1260554903164686336> **Publique**.
+> [` Site Officiel `](https://bds.ynov.com/) » **Publique**.
 > [` Hébergement VPS `](https://panel.paladium-bot.fr/server/fc0a8a1f) » **Privé**.''',color = 0X650000)
 
     embed.set_footer(text = f"Ynover - {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
