@@ -136,7 +136,7 @@ async def help(interaction:discord.Interaction):
 # /PING
 # ------------------------------------------
 
-@tree.command(name = 'ping', description = 'Affiche le temps de latence du bot.')
+@tree.command(name='ping', description='Affiche le temps de latence du bot.')
 async def ping(interaction: discord.Interaction):
     author_member: discord.Member = interaction.user
 
@@ -148,24 +148,45 @@ async def ping(interaction: discord.Interaction):
     for guild in bot.guilds:
         total_members += guild.member_count
 
-    ping_ms = round(client.latency * 1000)
-    headers = {'Authorization': 'Bearer ptla_VVQi0WpHAaahey0YEuMQPXRN3vWeQBP6zkl8fuT2dkk'}
-    response = requests.get("https://panel.paladium-bot.fr//api/client/servers/fc0a8a1f/resources", headers = headers)
+    headers = {'Authorization': 'Bearer ptlac_VVQi0WpHAaahey0YEuMQPXRN3vWeQBP6zkl8fuT2dkk'}
+    response = requests.get("https://panel.paladium-bot.fr/api/client/servers/fc0a8a1f/resources", headers = headers)
 
     if response.status_code == 200:
-        data = response.json()['attributes']["resources"]
-        ram_used = round(int(data["memory_bytes"]) / (1024 * 1024), 2)
+        try:
+            if not response.text:
+                raise ValueError("La réponse de l'API est vide")
 
-        embed = discord.Embed(
-            title = f'Temps de latence du Bot',
-            description = f'''`＃ PING` : **{ping_ms}ms**.
-`＃ Temps de Connexion` : **{str(timedelta(seconds=difference))}**.
+            data = response.json().get('attributes', {}).get('resources', {})
+            if not data:
+                raise ValueError("Les données JSON ne contiennent pas les attributs attendus")
+
+            ram_used = round(int(data["memory_bytes"]) / (1024 * 1024), 2)
+            cpu_usage = data["cpu_absolute"]
+            disk_usage = round(int(data["disk_bytes"]) / (1024 * 1024), 2)
+            network_rx = round(int(data["network_rx_bytes"]) / (1024 * 1024), 2)
+            network_tx = round(int(data["network_tx_bytes"]) / (1024 * 1024), 2)
+            server_uptime = str(timedelta(seconds = data["uptime"]))
+
+            embed = discord.Embed(title = 'Temps de latence du Bot',
+                description = f'''`＃ PING` : **ms**.
+`＃ Temps de Connexion` : **{uptime}**.
 `＃ RAM utilisée` : **{ram_used} Mo / {(psutil.virtual_memory().total // (1024 ** 2))} Mo**.
-`＃ Latence API` : **{response.elapsed.total_seconds() * 1000:.2f} ms**.''', 
-            color = 0x22B1A4
-        )
+`＃ Utilisation CPU` : **{cpu_usage:.2f} %**.
+`＃ Espace disque utilisé` : **{disk_usage} Mo**.
+`＃ Réseau reçu` : **{network_rx} Mo**.
+`＃ Réseau envoyé` : **{network_tx} Mo**.
+`＃ Uptime du serveur` : **{server_uptime}**.
+`＃ Latence API` : **{response.elapsed.total_seconds() * 1000:.2f} ms**.''',
+                color = 0x22B1A4)
+
+        except (ValueError, KeyError) as e:
+            error_message = f"Erreur lors de l'analyse des statistiques du serveur. Détails: {str(e)}"
+            print(error_message)
+            await interaction.response.send_message('Erreur lors de l’analyse des statistiques du serveur', ephemeral = True)
+            return
     else:
-        print("[ /HELP ] 〉Erreur lors de la récupération des statistiques du serveur")
+        error_message = f"Erreur lors de la récupération des statistiques du serveur. Code HTTP: {response.status_code}. Réponse: {response.text}"
+        print(error_message)
         await interaction.response.send_message('Erreur lors de la récupération des statistiques du serveur', ephemeral = True)
         return
 
