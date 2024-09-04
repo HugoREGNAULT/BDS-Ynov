@@ -113,8 +113,10 @@ async def bio():
 
 @tree.command(name = 'help', description = 'Affiche la liste des commandes disponibles')
 async def help(interaction:discord.Interaction):
+    ping_ms = round(client.latency * 1000)
+
     embed = discord.Embed(title = 'Liste des commandes', 
-                          description = f'''✧ **Ping :** `{round(client.latency * 1000)}ms`\n Voici la liste des commandes disponibles''', color = 0X22B1A4)
+                          description = f'''✧ **Ping :** `{ping_ms}ms`\n Voici la liste des commandes disponibles''', color = 0X22B1A4)
 
     embed.add_field(name = '＃ Administration \📌', value = f'''''', inline = False)
     embed.add_field(name = '＃ Création \🎨', value = f'''''', inline = False)
@@ -146,6 +148,7 @@ async def ping(interaction: discord.Interaction):
     for guild in bot.guilds:
         total_members += guild.member_count
 
+    ping_ms = round(client.latency * 1000)
     headers = {'Authorization': 'Bearer ptla_VVQi0WpHAaahey0YEuMQPXRN3vWeQBP6zkl8fuT2dkk'}
     response = requests.get("https://panel.paladium-bot.fr//api/client/servers/fc0a8a1f/resources", headers = headers)
 
@@ -155,7 +158,7 @@ async def ping(interaction: discord.Interaction):
 
         embed = discord.Embed(
             title = f'Temps de latence du Bot',
-            description = f'''`＃ PING` : **{round(bot.latency * 1000)}ms**.
+            description = f'''`＃ PING` : **{ping_ms}ms**.
 `＃ Temps de Connexion` : **{str(timedelta(seconds=difference))}**.
 `＃ RAM utilisée` : **{ram_used} Mo / {(psutil.virtual_memory().total // (1024 ** 2))} Mo**.
 `＃ Latence API` : **{response.elapsed.total_seconds() * 1000:.2f} ms**.''', 
@@ -169,7 +172,6 @@ async def ping(interaction: discord.Interaction):
     embed.set_thumbnail(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792166604885/logo_ynov_campus_rvb.gif?ex=66d9a0dd&is=66d84f5d&hm=3869fa5c41a09f823afb0d31af877108083b60622e275f66850b6d386b643043&')
     embed.set_image(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792506474556/logo_ynov_campus_rvb_blanc.jpg?ex=66d9a0dd&is=66d84f5d&hm=890a0b66fa1362304f067f04673c5f00c357bbda8bf94ff11e9888efeb0ce212&')
     await interaction.response.send_message(embed = embed)
-
 
 # ------------------------------------------
 # /LIENS
