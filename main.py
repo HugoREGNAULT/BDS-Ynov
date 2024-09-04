@@ -15,9 +15,10 @@ from io import BytesIO
 # CONFIGURATIONS ET INFORMATIONS GLOBALES
 # ------------------------------------------
 
-PERM_ADMIN_ID = 1251852225186234418
-default_guild_id = 1251656625622618213
-UPVOTE_CHANNEL_ID = 1260559146428792882
+PERM_ADMIN_ID = 000
+default_guild_id = 000
+UPVOTE_CHANNEL_ID = 000
+AUTOMATIC_ROLE_ID = 000
 
 METRICS_API_URL = "https://metrics.paladium-bot.fr/"
 
@@ -219,7 +220,27 @@ async def liens(interaction: discord.Interaction):
 # welcome_message
 # ------------------------------------------
 
+@bot.event
+async def on_member_join(member):
+    role = member.guild.get_role(AUTOMATIC_ROLE_ID)
+    if role:
+        await member.add_roles(role)
+        print(f"[ welcome_message ] 〉Le rôle a été attribué à {member.name}")
 
+    try:
+        await member.send(f"Bienvenue sur le serveur du BDS de Ynov Campus Nanterre, {member.name} !\n\n"
+            "Le BDS (Bureau Des Sports) est une association étudiante qui organise des activités sportives et des événements pour les étudiants.\n"
+            "Nous sommes toujours à la recherche de nouveaux membres motivés pour rejoindre notre équipe et participer à l'organisation des événements.\n\n"
+            "Actuellement, nous recrutons dans les domaines suivants :\n"
+            "- Organisation d'événements\n"
+            "- Communication\n"
+            "- Gestion des équipes sportives\n"
+            "- Sponsoring et partenariats\n\n"
+            "Si vous êtes intéressé(e) par l'une de ces opportunités, n'hésitez pas à nous contacter ou à poser des questions sur le serveur.\n"
+            "Bonne chance et à très bientôt dans l'équipe du BDS !")
+        print(f"[ welcome_message ] 〉Message de bienvenue envoyé à {member.name}")
+    except Exception as e:
+        print(f"[ welcome_message ] 〉Impossible d'envoyer un message à {member.name} // ERREUR : {e}")
 
 # ------------------------------------------
 # welcome_message
@@ -334,6 +355,23 @@ async def liens(interaction: discord.Interaction):
 
 # ------------------------------------------
 # /RANK
+# ------------------------------------------
+# ------------------------------------------
+# /BACKUP
+# ------------------------------------------
+
+
+# ------------------------------------------
+# /BACKUP
+# ------------------------------------------
+# ------------------------------------------
+# /LOAD-SERVER-CONFIG
+# ------------------------------------------
+
+
+
+# ------------------------------------------
+# /LOAD-SERVER-CONFIG
 # ------------------------------------------
 
 bot.run('TOKEN')
