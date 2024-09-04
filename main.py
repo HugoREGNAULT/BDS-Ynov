@@ -125,8 +125,13 @@ async def help(interaction:discord.Interaction):
     embed.set_thumbnail(url = '') # LOGO DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
     embed.set_image(url = '') # BANNIERE DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
 
+    await interaction.response.send_message(embed = embed)
+
 # ------------------------------------------
 # /HELP
+# ------------------------------------------
+# ------------------------------------------
+# /PING
 # ------------------------------------------
 
 @tree.command(name = 'ping', description = 'Affiche le temps de latence du bot.')
@@ -160,5 +165,28 @@ async def ping(interaction: discord.Interaction):
 
     embed.set_thumbnail(url = '') # LOGO DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
     await interaction.response.send_message(embed = embed)
+
+# ------------------------------------------
+# /LIENS
+# ------------------------------------------
+
+@tree.command(name = 'liens', description = 'Affiche les liens importants.')
+async def liens(interaction: discord.Interaction):
+    embed = discord.Embed(title = 'Liens importants', 
+                          description = f'''## Liens Importants
+Liens qui vous aideront à naviguer et à en savoir plus sur le BDS d'Ynov Paris
+
+> [` Site Officiel `](https://bds.ynov.com/) » <:PersonAdd:1260554903164686336> **Publique**.
+> [` Hébergement VPS `](https://panel.paladium-bot.fr/server/fc0a8a1f) » **Privé**.''',color = 0X650000)
+
+    embed.set_footer(text = f"Ynover - {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
+    embed.set_thumbnail(url = '') # LOGO DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
+    embed.set_image(url = '') # BANNIERE DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
+
+    await interaction.response.send_message(embed = embed)
+
+# ------------------------------------------
+# /LIENS
+# ------------------------------------------
 
 bot.run('TOKEN')
