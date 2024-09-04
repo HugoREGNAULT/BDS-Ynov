@@ -122,8 +122,8 @@ async def help(interaction:discord.Interaction):
     embed.add_field(name = '＃ Divers \🔮', value = f'''''', inline = False)
     
     embed.set_footer(text = f"Ynover - {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
-    embed.set_thumbnail(url = '') # LOGO DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
-    embed.set_image(url = '') # BANNIERE DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
+    embed.set_thumbnail(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792166604885/logo_ynov_campus_rvb.gif?ex=66d9a0dd&is=66d84f5d&hm=3869fa5c41a09f823afb0d31af877108083b60622e275f66850b6d386b643043&')
+    embed.set_image(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792506474556/logo_ynov_campus_rvb_blanc.jpg?ex=66d9a0dd&is=66d84f5d&hm=890a0b66fa1362304f067f04673c5f00c357bbda8bf94ff11e9888efeb0ce212&')
 
     await interaction.response.send_message(embed = embed)
 
@@ -163,7 +163,8 @@ async def ping(interaction: discord.Interaction):
         print("[ /HELP ] 〉Erreur lors de la récupération des statistiques du serveur")
         await interaction.response.send_message(f'Erreur lors de la récupération des statistiques du serveur', ephemeral = True)
 
-    embed.set_thumbnail(url = '') # LOGO DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
+    embed.set_thumbnail(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792166604885/logo_ynov_campus_rvb.gif?ex=66d9a0dd&is=66d84f5d&hm=3869fa5c41a09f823afb0d31af877108083b60622e275f66850b6d386b643043&')
+    embed.set_image(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792506474556/logo_ynov_campus_rvb_blanc.jpg?ex=66d9a0dd&is=66d84f5d&hm=890a0b66fa1362304f067f04673c5f00c357bbda8bf94ff11e9888efeb0ce212&')
     await interaction.response.send_message(embed = embed)
 
 # ------------------------------------------
@@ -180,8 +181,8 @@ Liens qui vous aideront à naviguer et à en savoir plus sur le BDS d'Ynov Paris
 > [` Hébergement VPS `](https://panel.paladium-bot.fr/server/fc0a8a1f) » **Privé**.''',color = 0X650000)
 
     embed.set_footer(text = f"Ynover - {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
-    embed.set_thumbnail(url = '') # LOGO DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
-    embed.set_image(url = '') # BANNIERE DE YNOV VIA DISCORD ENVOYÉ SUR UN SALON ex : "dev only"
+    embed.set_thumbnail(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792166604885/logo_ynov_campus_rvb.gif?ex=66d9a0dd&is=66d84f5d&hm=3869fa5c41a09f823afb0d31af877108083b60622e275f66850b6d386b643043&')
+    embed.set_image(url = 'https://cdn.discordapp.com/attachments/1280861064162054248/1280863792506474556/logo_ynov_campus_rvb_blanc.jpg?ex=66d9a0dd&is=66d84f5d&hm=890a0b66fa1362304f067f04673c5f00c357bbda8bf94ff11e9888efeb0ce212&')
 
     await interaction.response.send_message(embed = embed)
 
